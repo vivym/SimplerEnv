@@ -53,6 +53,23 @@ if __name__ == "__main__":
                 init_rng=args.octo_init_rng,
                 action_scale=args.action_scale,
             )
+    elif "rdt" in args.policy_model:
+        assert args.ckpt_path is not None
+        from simpler_env.policies.rdt.rdt_model import RDTInference
+
+        model = RDTInference(
+            pretrained_model_name_or_path=args.ckpt_path,
+            policy_setup=args.policy_setup,
+            action_scale=args.action_scale,
+        )
+    elif "mode" in args.policy_model:
+        from simpler_env.policies.mode.mode_model import MoDEInference
+
+        model = MoDEInference(
+            base_url="http://localhost:22780",
+            policy_setup=args.policy_setup,
+            action_scale=args.action_scale,
+        )
     else:
         raise NotImplementedError()
 
